@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Task</title>
+    <link th:href="@{/webjars/bootstrap/4.5.2/css/bootstrap.min.css}" rel="stylesheet" >
+    <style>
+        .red{
+            color: red;
+        }
+        .invalid{
+            border:2px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div class="jumbotron">
+        <h2>予定登録</h2>
+
+        <form th:action="@{/create}" th:object="${task}" method="post">
+            <label>予定</label>
+            <input type="text" th:field="*{title}" th:errorclass="invalid"><br>
+            <div class="red" th:errors="*{title}"></div>
+
+            <label>詳細</label>
+            <input type="text" th:field="*{detail}" th:errorclass="invalid"><br>
+            <div class="red" th:errors="*{detail}"></div>
+
+
+            <span class="badge bg-primary">Primary</span>
+            <button class="btn btn-primary">送信</button>
+        </form>
+    </div>
+    <span class="border border-primary"></span>
+    <h2>一覧</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>title</td>
+                <td>detail</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+        </thead>
+        <tr th:each="task : ${tas}">
+            <td>[[${task.id}]]</td>
+            <td>[[${task.title}]]</td>
+            <td>[[${task.detail}]]</td>
+            <td><a th:href="@{/edit/{id}(id=${task.id})}">編集</a></td>
+            <td><a th:href="@{/delete/{id}(id=${task.id})}">削除</a></td>
+        </tr>
+    </table>
+    <script th:src="@{/webjars/bootstrap/4.5.2/js/bootstrap.min.js}"></script>
+</body>
+</html>

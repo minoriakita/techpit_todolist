@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>編集画面</title>
+    <style>
+        .red{
+            color: red;
+        }
+        .invalid{
+            border: 2px solid red;
+        }
+    </style>
+</head>
+<body>
+    <h2>編集</h2>
+    <form th:action="@{/update/{id}(id=${id})}" th:object="${task}" method="post">
+        <label>予定</label>
+        <input type="text" th:field="*{title}" th:errorclass="invalid"><br>
+        <div class="red" th:errors="*{title}"></div>
+
+        <label>詳細</label>
+        <input type="number" th:field="*{detail}" th:errorclass="invalid"><br>
+        <div class="red" th:errors="*{detail}"></div>
+
+        <button>送信</button>
+    </form>
+</body>
+</html>
