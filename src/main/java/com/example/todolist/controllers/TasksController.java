@@ -11,41 +11,43 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
- import com.example.todolist.models.Task;
- import com.example.todolist.repository.TaskRepository;
+ import com.example.todolist.models.Tasks;
+import com.example.todolist.repository.TasksRepository;
+
+
 
 @Controller
-public class TaskController {
+public class TasksController {
 
     // TaskクラスのフィールドをFinalにする。
-    private final TaskRepository repository;
-    public TaskController(TaskRepository repository){
+    private final TasksRepository repository;
+    public TasksController(TasksRepository repository){
         this.repository = repository;
     }
 
     @GetMapping("/")
     // public String index(){
-    // public String index(@ModelAttribute Task task){
-    public String index(@ModelAttribute Task task, Model model){
+    // public String index(@ModelAttribute Task tasks){
+    public String index(@ModelAttribute Tasks tasks, Model model){
     // 一覧用データの用意
-    model.addAttribute("tas", repository.findAll());
-        return "task/index";
+    model.addAttribute("task", repository.findAll());
+        return "tasks/index";
     }
     
     @PostMapping("/create")
     // public String create(@RequestParam String name, Model model){
-    // public String create(@ModelAttribute Task task){
-    // public String create(@Validated @ModelAttribute Task task, BindingResult result) {
-    public String create(@Validated @ModelAttribute Task task, BindingResult result, Model model){
+    // public String create(@ModelAttribute Task tasks){
+    // public String create(@Validated @ModelAttribute Task tasks, BindingResult result) {
+    public String create(@Validated @ModelAttribute Tasks tasks, BindingResult result, Model model){
 
         // バリデーションエラーがある場合はindex.htmlを表示
         if (result.hasErrors()) {
             model.addAttribute("task", repository.findAll());
-            return "task/index";
+            return "tasks/index";
         }
 
-        repository.saveAndFlush(task);
-        // return "task/create";
+        repository.saveAndFlush(tasks);
+        // return "tasks/create";
         return "redirect:/";
     }
 
@@ -59,27 +61,27 @@ public class TaskController {
     @GetMapping("/edit/{id}")
     
     public String edit(@PathVariable long id, Model model){
-        model.addAttribute("task", repository.findById(id));
-        return "task/edit";
+        model.addAttribute("tasks", repository.findById(id));
+        return "tasks/edit";
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable long id, @Validated @ModelAttribute Task task, BindingResult result){
+    public String update(@PathVariable long id, @Validated @ModelAttribute Tasks tasks, BindingResult result){
         if (result.hasErrors()){
-            return "task/edit"; 
+            return "tasks/edit"; 
         }
-        repository.save(task);
+        repository.save(tasks);
         return "redirect:/";
     }
 
     @PostConstruct
     public void dataInit(){
-        Task work = new Task();
+        Tasks work = new Tasks();
         work.setTitle("仕事");
         work.setDetail("出社");
         repository.saveAndFlush(work);
 
-        Task trip = new Task();
+        Tasks trip = new Tasks();
         trip.setTitle("旅行");
         trip.setDetail("岡山");
         repository.saveAndFlush(trip);

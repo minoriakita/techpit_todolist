@@ -14,8 +14,7 @@ import javax.validation.constraints.Size;
  @Getter
  @Setter
  @Entity
-
-public class Task {
+public class Tasks {
     @Id
     @GeneratedValue
     private Long id;

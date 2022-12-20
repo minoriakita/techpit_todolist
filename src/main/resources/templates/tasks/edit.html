@@ -14,7 +14,7 @@
 </head>
 <body>
     <h2>編集</h2>
-    <form th:action="@{/update/{id}(id=${id})}" th:object="${task}" method="post">
+    <form th:action="@{/update/{id}(id=${id})}" th:object="${tasks}" method="post">
         <label>予定</label>
         <input type="text" th:field="*{title}" th:errorclass="invalid"><br>
         <div class="red" th:errors="*{title}"></div>

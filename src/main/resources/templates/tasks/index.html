@@ -17,7 +17,7 @@
     <div class="jumbotron">
         <h2>予定登録</h2>
 
-        <form th:action="@{/create}" th:object="${task}" method="post">
+        <form th:action="@{/create}" th:object="${tasks}" method="post">
             <label>予定</label>
             <input type="text" th:field="*{title}" th:errorclass="invalid"><br>
             <div class="red" th:errors="*{title}"></div>
@@ -25,7 +25,6 @@
             <label>詳細</label>
             <input type="text" th:field="*{detail}" th:errorclass="invalid"><br>
             <div class="red" th:errors="*{detail}"></div>
-
 
             <span class="badge bg-primary">Primary</span>
             <button class="btn btn-primary">送信</button>
@@ -43,14 +42,13 @@
                 <td></td>
                 <td></td>
             </tr>
-
         </thead>
-        <tr th:each="task : ${tas}">
-            <td>[[${task.id}]]</td>
-            <td>[[${task.title}]]</td>
-            <td>[[${task.detail}]]</td>
-            <td><a th:href="@{/edit/{id}(id=${task.id})}">編集</a></td>
-            <td><a th:href="@{/delete/{id}(id=${task.id})}">削除</a></td>
+        <tr th:each="tasks : ${task}">
+            <td>[[${tasks.id}]]</td>
+            <td>[[${tasks.title}]]</td>
+            <td>[[${tasks.detail}]]</td>
+            <td><a th:href="@{/edit/{id}(id=${tasks.id})}">編集</a></td>
+            <td><a th:href="@{/delete/{id}(id=${tasks.id})}">削除</a></td>
         </tr>
     </table>
     <script th:src="@{/webjars/bootstrap/4.5.2/js/bootstrap.min.js}"></script>
