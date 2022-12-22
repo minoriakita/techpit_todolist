@@ -11,46 +11,146 @@
         .invalid{
             border:2px solid red;
         }
+
+        .navbar{
+            height: 50px;
+            background-color: rgb(199, 157, 233);
+            color: white
+        }
+
+        h2 {
+            position: relative;
+            padding: 0.5em;
+            background: #e1c9ee;
+            color: white;
+            }
+
+        h2::before {
+            position: absolute;
+            content: '';
+            top: 100%;
+            left: 0;
+            border: none;
+            border-bottom: solid 10px transparent;
+            border-right: solid 15px rgb(149, 158, 155);
+            }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+        body {
+            display: flex;
+            flex-flow: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        td {
+            vertical-align: middle;
+        }
+
+        
     </style>
 </head>
 <body>
-    <div class="jumbotron">
-        <h2>予定登録</h2>
+    <header>
+        <nav class="navbar navbar-expand-lg" >
+            <div class="container">
+                <a class="navbar-brand" href="/"><span>Todo app</span></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                  </div>           
+            </div>
+        </nav>
+    </header>
+    <main>
+    <div class='container px-px-sm-0'>
+        <div class="row mt-4">
+            <div class="col-md-3">
+                <h2>Task</h2>
+                <div class="jumbotron mt-4">
+                    <form th:action="@{/create}" th:object="${tasks}" method="post">
+                        <div class="form-group">
+                            <label class="control-label" for="inputDate">date</label>
+                            <input type="text" class="form-control" id="inputDate" name="date" th:field="*{date}" th:errorclass="invalid"/>
+                            <div class="red" th:errors="*{title}"></div>
+                        </div>
 
-        <form th:action="@{/create}" th:object="${tasks}" method="post">
-            <label>予定</label>
-            <input type="text" th:field="*{title}" th:errorclass="invalid"><br>
-            <div class="red" th:errors="*{title}"></div>
+                        <div class="form-group">
+                            <label class="control-label" for="inputText">task title</label>
+                            <input type="text" class="form-control" id="inputText" name="title" th:field="*{title}" th:errorclass="invalid"/>
+                            <div class="red" th:errors="*{title}"></div>
+                          </div>
 
-            <label>詳細</label>
-            <input type="text" th:field="*{detail}" th:errorclass="invalid"><br>
-            <div class="red" th:errors="*{detail}"></div>
+                        <div class="form-group">
+                            <label class="control-label" for="inputTextarea1">detail</label>
+                                <textarea rows="3" cols="80" class="form-control" id="inputTextarea" name="detail" th:field="*{detail}" th:errorclass="invalid"></textarea>
+                            <div class="red" th:errors="*{title}"></div>
+                        </div>
+                        
+                        <span class="badge bg-primary">low</span>
+                        <span class="badge badge-warning">middle</span>
+                        <span class="badge badge-danger">high</span>
+                        <span class="badge badge-secondary">memo</span>
+                        <span class="badge badge-success">meeting</span>
+                        <span class="badge badge-info">tel</span>
+                        <span class="badge badge-light">mail</span>
+                        <div class="mt-4">
+                            <button class="btn btn-outline-secondary btn-light btn-block">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-8 offset-md-1">
+                <h2>Todo list</h2>
+                
+                <table class="table table-hover mt-4">
+                    <!-- <span class="border border-primary"> -->
+                    <thead>
+                        <tr>
+                            <td>ID</td>
+                            <td>date</td>
+                            <td>task title</td>
+                            <td>detail</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="tasks : ${task}">
+                        <td>[[${tasks.id}]]</td>
+                        <td>[[${tasks.date}]]</td>
+                        <td>[[${tasks.title}]]</td>
+                        <td>[[${tasks.detail}]]</td>
+                        <td><a th:href="@{/edit/{id}(id=${tasks.id})}" class="btn btn-outline-secondary btn-light">edit</a></td>
+                        <td><a th:href="@{/delete/{id}(id=${tasks.id})}" class="btn btn-outline-secondary btn-light">delete</a></td>
+                    </tr>
+                    </tbody>
+                </span>
+                </table>
+                <!-- </span> -->
+            </div>
+        </div>  
 
-            <span class="badge bg-primary">Primary</span>
-            <button class="btn btn-primary">送信</button>
-        </form>
     </div>
-    <span class="border border-primary"></span>
-    <h2>一覧</h2>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <td>ID</td>
-                <td>title</td>
-                <td>detail</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </thead>
-        <tr th:each="tasks : ${task}">
-            <td>[[${tasks.id}]]</td>
-            <td>[[${tasks.title}]]</td>
-            <td>[[${tasks.detail}]]</td>
-            <td><a th:href="@{/edit/{id}(id=${tasks.id})}">編集</a></td>
-            <td><a th:href="@{/delete/{id}(id=${tasks.id})}">削除</a></td>
-        </tr>
-    </table>
+    
     <script th:src="@{/webjars/bootstrap/4.5.2/js/bootstrap.min.js}"></script>
 </body>
+</main>
+<footer>
+    <div class='container mt-5'>
+        <div class='row'>
+          <div class='mx-auto'>
+              <p>CopyRight TodoApp.inc</p>
+          </div>
+      </div>
+    </div>
+  </footer>
 </html>

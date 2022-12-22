@@ -1,5 +1,7 @@
 package com.example.todolist.models;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,7 +11,9 @@ import javax.validation.constraints.NotBlank;
 // import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
- import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import lombok.Getter;
  import lombok.Setter;
  @Getter
  @Setter
@@ -18,6 +22,9 @@ public class Tasks {
     @Id
     @GeneratedValue
     private Long id;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
 
     @NotBlank
     @Size(max = 120)
@@ -28,6 +35,12 @@ public class Tasks {
     // @Min(0)
     // @Max(120)
     private String detail;
+
+    // public void setDate(int i) {
+    // }
+
+    // public void setDate(String string) {
+    // }
 
     // @NotBlank
     // @Email

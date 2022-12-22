@@ -77,13 +77,15 @@ public class TasksController {
     @PostConstruct
     public void dataInit(){
         Tasks work = new Tasks();
-        work.setTitle("仕事");
-        work.setDetail("出社");
+        // work.setDate(2022/12/22);
+        work.setTitle("work");
+        work.setDetail("remote work");
         repository.saveAndFlush(work);
 
         Tasks trip = new Tasks();
-        trip.setTitle("旅行");
-        trip.setDetail("岡山");
+        // trip.setDate(2022/12/22);
+        trip.setTitle("trip");
+        trip.setDetail("go to tokyo");
         repository.saveAndFlush(trip);
     }
 
