@@ -1,7 +1,5 @@
 package com.example.todolist.models;
 
-import java.time.LocalDate;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,18 +21,21 @@ public class Tasks {
     @GeneratedValue
     private Long id;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate date;
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    private String date;
 
     @NotBlank
     @Size(max = 120)
     private String title;
 
-    @NotBlank
     @Size(max = 120)
     // @Min(0)
     // @Max(120)
     private String detail;
+
+    private int flag;
+
+    // private String time_limit;
 
     // public void setDate(int i) {
     // }

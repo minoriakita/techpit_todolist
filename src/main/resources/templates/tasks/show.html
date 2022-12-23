@@ -79,7 +79,7 @@
 
                         <div class="form-group">
                             <label class="control-label" for="inputDate">date</label>
-                            <input type="date" class="form-control" id="inputDate" name="date" th:field="*{date}" />
+                            <input type="text" class="form-control" id="inputDate" name="date" th:field="*{date}" />
                             <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="help-block">error!</span>
                         </div>
 
@@ -102,30 +102,14 @@
                         <span class="badge badge-success">meeting</span>
                         <span class="badge badge-info">tel</span>
                         <span class="badge badge-light">mail</span>
-
                         <div class="mt-4">
-                            <div>conplete
-                               <input type="checkbox" value="1" th:field="*{flag}">                               
-                               <input type="hidden" name="!flag" value="0" >
-                            </div>
                             <button class="btn btn-outline-secondary btn-light btn-block">Send</button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <div class="col-md-8 offset-md-1"></div>
-
-    <!-- <h2>edit</h2>
-        <label>予定</label>
-        <input type="text" th:field="*{title}" th:errorclass="invalid"><br>
-        <div class="red" th:errors="*{title}"></div>
-
-        <label>詳細</label>
-        <input type="text" th:field="*{detail}" th:errorclass="invalid"><br>
-        <div class="red" th:errors="*{detail}"></div>
-
-        <button>送信</button>
-    </form> -->
+            <div class="col-md-8 offset-md-1">
+            </div>
 </body>
 </html>

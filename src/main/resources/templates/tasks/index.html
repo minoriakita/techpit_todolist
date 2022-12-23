@@ -79,13 +79,13 @@
                     <form th:action="@{/create}" th:object="${tasks}" method="post">
                         <div class="form-group">
                             <label class="control-label" for="inputDate">date</label>
-                            <input type="text" class="form-control" id="inputDate" name="date" th:field="*{date}" th:errorclass="invalid"/>
+                            <input type="date" class="form-control" id="inputDate" name="date" th:field="*{date}" th:errorclass="invalid"/>
                             <div class="red" th:errors="*{title}"></div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label" for="inputText">task title</label>
-                            <input type="text" class="form-control" id="inputText" name="title" th:field="*{title}" th:errorclass="invalid"/>
+                            <input type="text" class="form-control" id="inputText" name="title" th:field="*{title}" th:errorclass="invalid" value="2022/12/22"/>
                             <div class="red" th:errors="*{title}"></div>
                           </div>
 
@@ -94,6 +94,7 @@
                                 <textarea rows="3" cols="80" class="form-control" id="inputTextarea" name="detail" th:field="*{detail}" th:errorclass="invalid"></textarea>
                             <div class="red" th:errors="*{title}"></div>
                         </div>
+                        <div><input type="hidden" value=""></div>
                         
                         <span class="badge bg-primary">low</span>
                         <span class="badge badge-warning">middle</span>
@@ -110,35 +111,75 @@
             </div>
             <div class="col-md-8 offset-md-1">
                 <h2>Todo list</h2>
-                
                 <table class="table table-hover mt-4">
-                    <!-- <span class="border border-primary"> -->
                     <thead>
                         <tr>
+                            <td></td>
                             <td>ID</td>
                             <td>date</td>
                             <td>task title</td>
                             <td>detail</td>
                             <td></td>
                             <td></td>
+                            <td></td>
                         </tr>
                     </thead>
+
                     <tbody>
-                    <tr th:each="tasks : ${task}">
-                        <td>[[${tasks.id}]]</td>
-                        <td>[[${tasks.date}]]</td>
-                        <td>[[${tasks.title}]]</td>
-                        <td>[[${tasks.detail}]]</td>
-                        <td><a th:href="@{/edit/{id}(id=${tasks.id})}" class="btn btn-outline-secondary btn-light">edit</a></td>
-                        <td><a th:href="@{/delete/{id}(id=${tasks.id})}" class="btn btn-outline-secondary btn-light">delete</a></td>
-                    </tr>
+                        <form method="post" th:action="@{/finish/{id}(id=${tasks.id})}" th:each="tasks : ${task}" >
+                            <div th:if="${tasks.flag == 0}">
+                            <tr>
+                                <td>[[${tasks.flag}]]</td>
+                                <td>[[${tasks.id}]]</td>
+                                <td>[[${tasks.date}]]</td>
+                                <td>[[${tasks.title}]]</td>
+                                <td>[[${tasks.detail}]]</td>
+                                <!-- <td><button class="btn btn-outline-secondary btn-light btn-sm">finish</button></td> -->
+                                <td><a th:href="@{/edit/{id}(id=${tasks.id})}" class="btn btn-outline-secondary btn-light btn-sm">edit</a></td>
+                                <td><a th:href="@{/delete/{id}(id=${tasks.id})}" class="btn btn-outline-secondary btn-light btn-sm">delete</a></td>
+                            </tr>
+                        </div>
+                        </form>
                     </tbody>
+
                 </span>
                 </table>
-                <!-- </span> -->
+
+                <h3>Finish</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <td>ID</td>
+                                <td>date</td>
+                                <td>task title</td>
+                                <td>detail</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+
+                <form method="post" th:action="@{/finish/{id}(id=${tasks.id})}" th:each="tasks : ${task}" >
+                    <div th:if="${tasks.flag == 1}">
+                        <tbody>
+                            <tr>
+                                <td>[[${tasks.flag}]]</td>
+                                <td>[[${tasks.id}]]</td>
+                                <td>[[${tasks.date}]]</td>
+                                <td>[[${tasks.title}]]</td>
+                                <td>[[${tasks.detail}]]</td>
+                                <!-- <td><a th:href="@{/update/{id}(id=${tasks.id})}" class="btn btn-outline-secondary btn-light btn-sm">finish</a></td> -->
+                                <td><a th:href="@{/edit/{id}(id=${tasks.id})}" class="btn btn-outline-secondary btn-light btn-sm">edit</a></td>
+                                <td><a th:href="@{/delete/{id}(id=${tasks.id})}" class="btn btn-outline-secondary btn-light btn-sm">delete</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </form>
+                </div>
             </div>
         </div>  
-
     </div>
     
     <script th:src="@{/webjars/bootstrap/4.5.2/js/bootstrap.min.js}"></script>
