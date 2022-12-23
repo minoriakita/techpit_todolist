@@ -2,30 +2,30 @@
 <html xmlns="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit</title>
+    <title>Todo app</title>
     <link th:href="@{/webjars/bootstrap/4.5.2/css/bootstrap.min.css}" rel="stylesheet" >
     <style>
         .red{
             color: red;
         }
         .invalid{
-            border: 2px solid red;
+            border:2px solid red;
         }
 
         .navbar{
             height: 50px;
-            background-color: rgb(199, 157, 233);
+            background-color: rgb(57, 87, 105);
             color: white
         }
 
-        h2 {
+        h3 {
             position: relative;
             padding: 0.5em;
-            background: #e1c9ee;
+            background: #3a6147;
             color: white;
             }
 
-        h2::before {
+        h3::before {
             position: absolute;
             content: '';
             top: 100%;
@@ -35,9 +35,17 @@
             border-right: solid 15px rgb(149, 158, 155);
             }
 
+        .navbar-brand {
+            color: white !important;
+        }
+
         a {
             color: white;
             text-decoration: none;
+        }
+
+        a:hover {
+            transform: translateY(-5px);
         }
 
         body {
@@ -53,6 +61,8 @@
         td {
             vertical-align: middle;
         }
+
+        
     </style>
 </head>
 <body>
@@ -72,44 +82,89 @@
     <div class='container px-px-sm-0'>
         <div class="row mt-4">
             <div class="col-md-3">
-                <h2>Edit</h2>
+                <h3>Task add</h3>
                 <div class="jumbotron mt-4">
-                    <!-- <form th:action="@{/create}" th:object="${tasks}" method="post"> -->
-                        <form th:action="@{/update/{id}(id=${id})}" th:object="${tasks}" method="post">
-
+                    <form th:action="@{/create}" th:object="${tasks}" method="post">
                         <div class="form-group">
-                            <label class="control-label" for="inputDate">date</label>
-                            <input type="text" class="form-control" id="inputDate" name="date" th:field="*{date}" />
-                            <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="help-block">error!</span>
+                            <label class="control-label" for="inputDate">Date</label>
+                                <input type="date" class="form-control" id="inputDate" name="date" th:field="*{date}" th:errorclass="invalid"/>
+                            <div class="red" th:errors="*{title}"></div>
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label" for="inputText">task title</label>
-                            <input type="text" class="form-control" id="inputText" name="title" th:field="*{title}" th:errorclass="invalid"/>
+                            <label class="control-label" for="inputText">Task title</label>
+                                <input type="text" class="form-control" id="inputText" name="title" th:field="*{title}" th:errorclass="invalid"/>
                             <div class="red" th:errors="*{title}"></div>
-                          </div>
+                        </div>
 
                         <div class="form-group">
-                            <label class="control-label" for="inputTextarea1">detail</label>
-                                <textarea rows="3" cols="80" class="form-control" id="inputTextarea" name="detail" th:field="*{detail}" th:errorclass="invalid"></textarea>
-                            <div class="red" th:errors="*{title}"></div>
+                            <label class="control-label" for="inputText">Detail</label>
+                                <textarea type="text" rows="3" cols="80" class="form-control" id="inputTextarea" name="detail" th:field="*{detail}" th:errorclass="invalid"></textarea>
+                            <!-- <div class="red" th:errors="*{title}"></div> -->
                         </div>
                         
-                        <span class="badge bg-primary">low</span>
-                        <span class="badge badge-warning">middle</span>
-                        <span class="badge badge-danger">high</span>
-                        <span class="badge badge-secondary">memo</span>
-                        <span class="badge badge-success">meeting</span>
-                        <span class="badge badge-info">tel</span>
-                        <span class="badge badge-light">mail</span>
+                        <div><input type="hidden" value=""></div>
+                        
+                        <span class="badge bg-primary">Low</span>
+                        <span class="badge badge-warning">Middle</span>
+                        <span class="badge badge-danger">High</span>
+                        <span class="badge badge-secondary">Memo</span>
+                        <span class="badge badge-success">Meeting</span>
+                        <span class="badge badge-info">Tel</span>
+                        <span class="badge badge-light">Mail</span>
                         <div class="mt-4">
                             <button class="btn btn-outline-secondary btn-light btn-block">Send</button>
                         </div>
                     </form>
                 </div>
             </div>
-
             <div class="col-md-8 offset-md-1">
+                <h3>Show task</h3>
+                <table class="table table-hover mt-4">
+                    <thead>
+                        <tr>
+                            <td>ID</td>
+                            <td>Date</td>
+                            <td>Task title</td>
+                            <td>Detail</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <form method="get" th:action="@{/show/{id}(id=${tasks.id})}" th:each="tasks : ${task}" >
+                            <div th:if="${tasks.flag == 0}">
+                            <tr>
+                                <td>[[${tasks.id}]]</td>
+                                <td>[[${tasks.date}]]</td>
+                                <td>[[${tasks.title}]]</td>
+                                <td>[[${tasks.detail}]]</td>
+                                <td><a th:href="@{/edit/{id}(id=${tasks.id})}" class="btn btn-outline-secondary btn-light btn-sm">Edit</a></td>
+                                <td><a th:href="@{/delete/{id}(id=${tasks.id})}" class="btn btn-outline-secondary btn-light btn-sm">Delete</a></td>
+                            </tr>
+                        </div>
+                        </form>
+                    </tbody>
+                </span>
+                </table>
+                </div>
+                </form>
+                </div>
             </div>
+        </div>  
+    </div>
+    
+    <script th:src="@{/webjars/bootstrap/4.5.2/js/bootstrap.min.js}"></script>
 </body>
+</main>
+<footer>
+    <div class='container mt-5'>
+        <div class='row'>
+          <div class='mx-auto'>
+              <p>CopyRight TodoApp.inc</p>
+          </div>
+      </div>
+    </div>
+  </footer>
 </html>

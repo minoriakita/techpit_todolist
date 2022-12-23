@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
  import com.example.todolist.models.Tasks;
 import com.example.todolist.repository.TasksRepository;
 
-
-
 @Controller
 public class TasksController {
 
@@ -47,7 +45,6 @@ public class TasksController {
         }
 
         repository.saveAndFlush(tasks);
-        // return "tasks/create";
         return "redirect:/";
     }
 
@@ -74,32 +71,26 @@ public class TasksController {
         return "redirect:/";
     }
 
-    // @PostMapping("/finish/{id}")
-    // public String finish(@PathVariable long id, @ModelAttribute Tasks tasks, Model model){
-    //     repository.save(tasks);
-    //     return "redirect:/";
-    // }
-
-    // @RequestMapping(value="/update")
-    // public String update(Tasks task) {
-    //     todoMapper.update(task);
-    //     return "redirect:/";
-    // }
+    // @GetMapping("/show/{id}")
+    // public String show(@ModelAttribute Tasks tasks, Model model){
+    //     model.addAttribute("tasks", repository.findById(id));
+    //         return "tasks/show";
+    //     }
 
     @PostConstruct
     public void dataInit(){
         Tasks work = new Tasks();
-        work.setDate("2022-12-22");
-        work.setTitle("work");
-        work.setDetail("remote work");
+        work.setDate("2022-12-21");
+        work.setTitle("Work");
+        work.setDetail("Remote work");
         work.setFlag(0);
         repository.saveAndFlush(work);
 
         Tasks trip = new Tasks();
-        trip.setDate("2022-12-22");
-        trip.setTitle("trip");
-        trip.setDetail("go to tokyo");
-        trip.setFlag(0);
+        trip.setDate("2022-12-24");
+        trip.setTitle("Go out");
+        trip.setDetail("Go to tokyo");
+        trip.setFlag(1);
         repository.saveAndFlush(trip);
     }
 

@@ -25,50 +25,11 @@ public class Tasks {
     private String date;
 
     @NotBlank
-    @Size(max = 120)
+    @Size(max = 50)
     private String title;
 
-    @Size(max = 120)
-    // @Min(0)
-    // @Max(120)
+    @Size(max = 100)
     private String detail;
 
     private int flag;
-
-    // private String time_limit;
-
-    // public void setDate(int i) {
-    // }
-
-    // public void setDate(String string) {
-    // }
-
-    // @NotBlank
-    // @Email
-    // @Size(max = 254)
-    // private String email;
-
-    // public String getName() {
-    //     return this.name;
-    // }
-
-    // public Integer getAge() {
-    //     return this.age;
-    // }
-
-    // public String getEmail() {
-    //     return this.email;
-    // }
-
-    // public void setName(String name) {
-    //     this.name = name;
-    // }
-
-    // public void setAge(Integer age) {
-    //     this.age = age;
-    // }
-
-    // public void setEmail(String email) {
-    //     this.email = email;
-    // }
 }

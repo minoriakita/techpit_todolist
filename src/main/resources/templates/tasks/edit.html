@@ -2,30 +2,30 @@
 <html xmlns="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit</title>
+    <title>Todo app</title>
     <link th:href="@{/webjars/bootstrap/4.5.2/css/bootstrap.min.css}" rel="stylesheet" >
     <style>
         .red{
             color: red;
         }
         .invalid{
-            border: 2px solid red;
+            border:2px solid red;
         }
 
         .navbar{
             height: 50px;
-            background-color: rgb(199, 157, 233);
+            background-color: rgb(57, 87, 105);
             color: white
         }
 
-        h2 {
+        h3 {
             position: relative;
-            padding: 0.5em;
-            background: #e1c9ee;
+            padding: 0.2em;
+            background: #3a6147;
             color: white;
             }
 
-        h2::before {
+        h3::before {
             position: absolute;
             content: '';
             top: 100%;
@@ -35,9 +35,17 @@
             border-right: solid 15px rgb(149, 158, 155);
             }
 
+        .navbar-brand {
+            color: white !important;
+        }
+
         a {
             color: white;
             text-decoration: none;
+        }
+
+        a:hover {
+            transform: translateY(-5px);
         }
 
         body {
@@ -62,9 +70,9 @@
                 <a class="navbar-brand" href="/"><span>Todo app</span></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                  </div>           
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                </div>           
             </div>
         </nav>
     </header>
@@ -72,60 +80,46 @@
     <div class='container px-px-sm-0'>
         <div class="row mt-4">
             <div class="col-md-3">
-                <h2>Edit</h2>
+                <h3>Task edit</h3>
                 <div class="jumbotron mt-4">
-                    <!-- <form th:action="@{/create}" th:object="${tasks}" method="post"> -->
-                        <form th:action="@{/update/{id}(id=${id})}" th:object="${tasks}" method="post">
+                    <form th:action="@{/update/{id}(id=${id})}" th:object="${tasks}" method="post">
 
-                        <div class="form-group">
-                            <label class="control-label" for="inputDate">date</label>
-                            <input type="date" class="form-control" id="inputDate" name="date" th:field="*{date}" />
-                            <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="help-block">error!</span>
+                    <div class="form-group">
+                        <label class="control-label" for="inputDate">Date</label>
+                        <input type="date" class="form-control" id="inputDate" name="date" th:field="*{date}" />
+                        <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="help-block">error!</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="inputText">Task title</label>
+                        <input type="text" class="form-control" id="inputText" name="title" th:field="*{title}" th:errorclass="invalid"/>
+                        <div class="red" th:errors="*{title}"></div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="control-label" for="inputText">task title</label>
-                            <input type="text" class="form-control" id="inputText" name="title" th:field="*{title}" th:errorclass="invalid"/>
-                            <div class="red" th:errors="*{title}"></div>
-                          </div>
+                    <div class="form-group">
+                        <label class="control-label" for="inputTextarea1">Detail</label>
+                            <textarea rows="3" cols="80" class="form-control" id="inputTextarea" name="detail" th:field="*{detail}" th:errorclass="invalid"></textarea>
+                        <div class="red" th:errors="*{title}"></div>
+                    </div>
+                    
+                    <span class="badge bg-primary">Low</span>
+                    <span class="badge badge-warning">Middle</span>
+                    <span class="badge badge-danger">High</span>
+                    <span class="badge badge-secondary">Memo</span>
+                    <span class="badge badge-success">Meeting</span>
+                    <span class="badge badge-info">Tel</span>
+                    <span class="badge badge-light">Mail</span>
 
-                        <div class="form-group">
-                            <label class="control-label" for="inputTextarea1">detail</label>
-                                <textarea rows="3" cols="80" class="form-control" id="inputTextarea" name="detail" th:field="*{detail}" th:errorclass="invalid"></textarea>
-                            <div class="red" th:errors="*{title}"></div>
+                    <div class="mt-4">
+                        <div class="ml-5">Complete
+                            <input type="checkbox" value="1" th:field="*{flag}" class="mb-4 ml-3">                               
+                            <input type="hidden" name="!flag" value="0" >
                         </div>
-                        
-                        <span class="badge bg-primary">low</span>
-                        <span class="badge badge-warning">middle</span>
-                        <span class="badge badge-danger">high</span>
-                        <span class="badge badge-secondary">memo</span>
-                        <span class="badge badge-success">meeting</span>
-                        <span class="badge badge-info">tel</span>
-                        <span class="badge badge-light">mail</span>
-
-                        <div class="mt-4">
-                            <div>conplete
-                               <input type="checkbox" value="1" th:field="*{flag}">                               
-                               <input type="hidden" name="!flag" value="0" >
-                            </div>
-                            <button class="btn btn-outline-secondary btn-light btn-block">Send</button>
-                        </div>
+                        <button class="btn btn-outline-secondary btn-light btn-block">Send</button>
+                    </div>
                     </form>
                 </div>
             </div>
-
             <div class="col-md-8 offset-md-1"></div>
-
-    <!-- <h2>edit</h2>
-        <label>予定</label>
-        <input type="text" th:field="*{title}" th:errorclass="invalid"><br>
-        <div class="red" th:errors="*{title}"></div>
-
-        <label>詳細</label>
-        <input type="text" th:field="*{detail}" th:errorclass="invalid"><br>
-        <div class="red" th:errors="*{detail}"></div>
-
-        <button>送信</button>
-    </form> -->
 </body>
 </html>
